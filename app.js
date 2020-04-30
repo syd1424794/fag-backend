@@ -1,24 +1,21 @@
 const express = require('express');
 const port = 3500;
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+var blogs = require('./routes/blogs.js');
 var app = express();
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'fag'
-});
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected!');
-});
+const mysql = require('mysql');
+var connection = require('./lib/db');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.json({ 'msg': 'App is running' })
-})
+    res.json({ 'msg': 'App is running' });
+});
+
+app.use('/blogs', blogs);
 
 app.listen(port, () => {
     console.log(`App is listening at port: ${port}`);
