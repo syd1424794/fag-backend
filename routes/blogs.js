@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../lib/db');
 
-router.get('/', function (req, res, next) {
+router.get('/all', function (req, res, next) {
     connection.query('SELECT * FROM blogs', function (error, results) {
         if (error) {
             throw error
