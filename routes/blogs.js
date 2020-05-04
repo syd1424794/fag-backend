@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../lib/db');
 
+var tableCheck = require('../lib/tableCheck');
+var tableName = "blogs";
+var tableQuery = "CREATE TABLE IF NOT EXISTS "+tableName+" (id INTEGER NOT NULL AUTO_INCREMENT, title TEXT, short_desc TEXT, category VARCHAR(255), tags TEXT, description MEDIUMTEXT, featured_img TEXT, img_thumbnail TEXT, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, is_deleted VARCHAR(20) ,PRIMARY KEY (id) )";
+tableCheck(tableName, tableQuery); 
+
 router.get('/', function (req, res, next) {
     connection.query('SELECT * FROM blogs', function (error, results) {
         if (error) {

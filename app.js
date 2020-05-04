@@ -3,6 +3,7 @@ const port = 3500;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 var blogs = require('./routes/blogs.js');
+var contacts = require('./routes/contacts.js');
 var app = express();
 
 const mysql = require('mysql');
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/blogs', blogs);
+app.use('/contacts', contacts);
 
 app.listen(port, () => {
     console.log(`App is listening at port: ${port}`);
