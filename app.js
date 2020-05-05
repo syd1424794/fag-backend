@@ -26,4 +26,4 @@ app.use('/contacts', contacts);
 
 app.listen(port, () => {
     console.log(`App is listening at port: ${port}`);
-})
+});
