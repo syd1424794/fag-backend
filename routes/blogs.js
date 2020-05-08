@@ -10,6 +10,7 @@ const { check, validationResult } = require('express-validator');
 var tableQuery = "CREATE TABLE IF NOT EXISTS " + tableName + " (id INTEGER NOT NULL AUTO_INCREMENT, title TEXT, short_desc TEXT, category VARCHAR(255), tags TEXT, description MEDIUMTEXT, featured_img TEXT, img_thumbnail TEXT, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, is_deleted VARCHAR(20) ,PRIMARY KEY (id) )";
 
 tableCheck(tableName, tableQuery);
+
 router.get('/all', function (req, res, next) {
     connection.query('SELECT * FROM blogs', function (error, results) {
         if (error) {
@@ -77,5 +78,21 @@ router.post('/add',
         });
     }
 );
+
+router.get('/edit/:id', function (req, res) {
+    let blog_id = req.params.id;
+    // console.log(blog_id);
+    connection.query('SELECT * FROM blogs WHERE id = ' + blog_id, function (error, result) {
+        if (error) {
+            throw error
+        } else {
+            if (!result.length) {
+                return res.json({ "status": 200, "data": {} });
+            }
+            res.json({ "status": 200, "data": result });
+            console.log('Single Blog: ', result);
+        }
+    });
+});
 
 module.exports = router; 
